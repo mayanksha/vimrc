@@ -11,7 +11,7 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'jiangmiao/auto-pairs.git'
 Plugin 'tyrannicaltoucan/vim-quantum.git'
-Plugin 'vim-airline/vim-airline'
+Plugin 'mattn/emmet-vim'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -54,5 +54,3 @@ autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 let g:user_emmet_mode='a'  "enable all functions, which is equal to
 let g:user_emmet_leader_key='<C-f>'
 let g:user_emmet_install_global = 0
-autocmd FileType html,css EmmetInstall
-
