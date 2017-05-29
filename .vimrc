@@ -9,15 +9,21 @@ call vundle#begin()
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
+<<<<<<< HEAD
 Plugin 'jiangmiao/auto-pairs.git'
 Plugin 'tyrannicaltoucan/vim-quantum.git'
 Plugin 'mattn/emmet-vim'
+=======
+Plugin 'tyrannicaltoucan/vim-quantum.git'
+Plugin 'jiangmiao/auto-pairs.git'
+>>>>>>> 1397db7292898947597b10bd525a7abc246e0642
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
 "
+<<<<<<< HEAD
 set hidden	"Hides buffers instead of closing them. Means you can ahve unwritten changes to a file and open a new file using :e, without being forced to write or undo your changes first. Also, undo buffers and marks are preserved while the buffer is open.
 syntax enable
 set background=dark
@@ -29,6 +35,23 @@ let g:quantum_italics=1
 colorscheme quantum 
 "colorscheme jellybeans
 
+=======
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
+set hidden	"Hides buffers instead of closing them. Means you can ahve unwritten changes to a file and open a new file using :e, without being forced to write or undo your changes first. Also, undo buffers and marks are preserved while the buffer is open.
+syntax enable
+"set background=dark
+"let g:quantum_dark = 1
+"colorscheme quantum 
+colorscheme jellybeans
+set t_Co=256
+>>>>>>> 1397db7292898947597b10bd525a7abc246e0642
 set tabstop=4	"Tab is four spaces
 set autoindent	"Autoindenting always on
 set copyindent	"Copy Previous indent on autoindenting
@@ -54,3 +77,7 @@ autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 let g:user_emmet_mode='a'  "enable all functions, which is equal to
 let g:user_emmet_leader_key='<C-f>'
 let g:user_emmet_install_global = 0
+<<<<<<< HEAD
+=======
+autocmd FileType html,css EmmetInstall
+>>>>>>> 1397db7292898947597b10bd525a7abc246e0642
