@@ -2,7 +2,7 @@
 My Vimrc
 
 Using Vundle as the package manager.
-Colorscheme : [vim-quantum](https://github.com/tyrannicaltoucan/vim-quantum) 
+Colorscheme : NeoDark with custom background color.
 <<<<<<< HEAD
 
 =======
