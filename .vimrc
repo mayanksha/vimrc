@@ -1,6 +1,7 @@
 set nocompatible	"Changes other options as side effect 
 filetype off                  " required
 
+
 "VUNDLE
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
