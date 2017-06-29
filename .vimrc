@@ -1,10 +1,12 @@
 set nocompatible	"Changes other options as side effect 
 filetype off                  " required
 
-
-"VUNDLE
+" set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+" let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'tyrannicaltoucan/vim-quantum.git'
 Plugin 'jiangmiao/auto-pairs.git'
@@ -24,9 +26,12 @@ Plugin 'digitaltoad/vim-pug'
 Plugin 'alvan/vim-closetag'
 "Plugin 'jvanja/vim-bootstrap4-snippets'
 Plugin 'terryma/vim-multiple-cursors'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'scrooloose/NERDCommenter'
+" All of your Plugins must be added before the following line
 call vundle#end()            " required
-
 filetype plugin indent on    " required
+
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
 "
@@ -49,37 +54,34 @@ set termguicolors
 "colorscheme jellybeans
 let g:neodark#background = '#232227'
 colorscheme neodark
-set t_co=256
-set tabstop=4	"tab is four spaces
-set autoindent	"autoindenting always on
-set copyindent	"copy previous indent on autoindenting
+set t_Co=256
+set tabstop=4	"Tab is four spaces
+set autoindent	"Autoindenting always on
+set copyindent	"Copy Previous indent on autoindenting
 set number
 set relativenumber
-set shiftwidth=4	"number of spaces to use for autoindenting
-set showmatch	"show matching parenthesis
+set shiftwidth=4	"Number of spaces to use for autoindenting
+set showmatch	"Show matching parenthesis
 set smarttab	"insert tabs on the start of a line according to shiftwidth, not tabstop
 set hlsearch	"highligh search terms
 set incsearch	"show search matches as you type
 set backspace=indent,eol,start
-<<<<<<< head
-set undolevels=1000	
-set history=1000	"history amount
+set undolevels=1000
+set history=1000	"History amount
 
 
-"******************key bindings******************"
-"remap shift+tab to literal tab in insert mode
-inoremap <s-tab> <c-v><tab>
-"remapped nul to switch buffers
-noremap <nul> :bn<cr>
+"Map leader Key to ","
+let g:mapleader=","
+inoremap <S-Tab> <C-V><Tab>
+"Remapped NUL to switch buffers
+noremap <NUL> :bn<CR>
+map <leader>ff <leader>c<space>
 
 filetype plugin indent on	"Turns the filetype plugin on
 "autocmd vimenter * NERDTree
 "autocmd vimenter * wincmd p	"Changes the focus from NERDTree to Opened File
 "autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif	"Closes the last remainig NERDTree split window
-
-
-"******************FileType Extension******************"
-autocmd FileType html set omnifunc=htmlcomplete#CompleteTags	"Autocompletes HTML tags
+"autocmd FileType html set omnifunc=htmlcomplete#CompleteTags	"Autocompletes HTML tags
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
@@ -88,10 +90,6 @@ autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 au BufRead,BufNewFile *.ts  setlocal filetype=typescript
 
 
-"Map leader Key to ","
-let g:mapleader=","
-
-"******************TYPESCRIPT******************"
 let g:typescript_compiler_binary = 'tsc'
 let g:typescript_compiler_options = ''
 autocmd QuickFixCmdPost [^l]* nested cwindow
@@ -99,8 +97,7 @@ autocmd QuickFixCmdPost    l* nested lwindow
 
 "Below option shows the method's signature while completion
 let g:tsuquyomi_completion_detail = 1
-
-"******************Vim Airline******************"
+"Enable vim-airline
 let g:airline#extensions#tabline#enabled = 1
 set laststatus=2 
 let g:airline_theme='molokai'
@@ -108,3 +105,11 @@ let g:airline_theme='molokai'
 "let g:neocomplete#enable_at_startup = 1
 "set runtimepath^=~/.vim/bundle/node-complete/after
 let g:SuperTabDefaultCompletionType = "context"
+set dictionary+=~/.vim/bundle/bootstrap-snippets/dictionary
+set complete+=k
+
+"Vim-Multiple Cursors Configuration
+let g:multi_cursor_next_key='<C-n>'
+let g:multi_cursor_prev_key='<C-p>'
+let g:multi_cursor_skip_key='<C-x>'
+let g:multi_cursor_quit_key='<Esc>'
