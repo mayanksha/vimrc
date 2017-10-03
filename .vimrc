@@ -9,15 +9,22 @@ vnoremap c :call NERDComment('x', 'Toggle')<CR>
 "nnoremap <C-w> :bd | bd
 "nmap <Leader> <leader>c<space>
 noremap <NUL> :bn<CR>
-nnoremap <C-e> :bd<CR>
-"nnoremap <C-i> :bd | bd | Vexplore | wincmd l
+nnoremap <F2> :bd<CR>
+nnoremap <C-e> :call CloseBufWithoutClosingNetrw()<CR>
+
 
 " Use ctrl-[hjkl] to select the active split!
 nmap <silent> <c-k> :wincmd k<CR>
-nmap <silent> <c-j> :wincmd j<CR>
+"nmap <silent> <c-j> :wincmd j<CR>
 nmap <silent> <c-h> :wincmd h<CR>
 nmap <silent> <c-l> :wincmd l<CR>
 
+function CloseBufWithoutClosingNetrw()
+	:bd
+	:bd
+	:Vexplore
+	:wincmd l
+endfunction
 
 function! ToggleVExplorer()
 	if exists("t:expl_buf_num")
@@ -106,7 +113,7 @@ set autoindent	"Autoindenting always on
 set copyindent	"Copy Previous indent on autoindenting
 set number
 set relativenumber
-set shiftwidth=2	"Number of spaces to use for autoindenting
+set shiftwidth=4	"Number of spaces to use for autoindenting
 set showmatch	"Show matching parenthesis
 set smarttab	"insert tabs on the start of a line according to shiftwidth, not tabstop
 set hlsearch	"highligh search terms
@@ -118,6 +125,8 @@ set history=1000	"History amount
 set laststatus=2	"Always Display the status line 
 set timeoutlen=10	"Set the timeout for change from insert to normal mode
 					"change in vim airline
+
+set directory^=$HOME/.vim/tmp// "To change the default save directory of swap files to .vim/tmp for better file management"
 
 
 filetype plugin indent on	"Turns the filetype plugin on
@@ -137,6 +146,9 @@ autocmd FileType typescript syn clear foldBraces
 
 au BufRead,BufNewFile *.ts  setlocal filetype=typescript
 
+"FOR YCM, to query the omni completion engine at each keypress. Might cause
+"stuttering
+let g:ycm_cache_omnifunc = 1
 
 let g:typescript_compiler_binary = 'tsc'
 let g:typescript_compiler_options = ''
