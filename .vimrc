@@ -5,6 +5,8 @@
 "*************************************************************************
 "*************** Custom Mappings ***************
 
+
+
 "Map leader Key to ","
 	let mapleader=","
 "Remapped NUL to switch buffers
@@ -38,11 +40,11 @@ nnoremap <C-e> :call CloseBufWithoutClosingNetrw()<CR>
 	map w e
 "Vim Surround mappings
 	vnoremap <silent> <Plug>VSurround  :<C-U>call <SID>opfunc(visualmode(),visualmode() ==# 'V' ? 1 : 0)<CR>
-	xnoremap <silent> <M-"> :call <SNR>26_opfunc(visualmode(),visualmode() ==# 'V' ? 1 : 0)<CR>"
-	xnoremap <silent> [ :call <SNR>26_opfunc(visualmode(),visualmode() ==# 'V' ? 1 : 0)<CR>]
-	xnoremap <silent> ' :call <SNR>26_opfunc(visualmode(),visualmode() ==# 'V' ? 1 : 0)<CR>'
-	xnoremap <silent> ( :call <SNR>26_opfunc(visualmode(),visualmode() ==# 'V' ? 1 : 0)<CR>)
-	xnoremap <silent> { :call <SNR>26_opfunc(visualmode(),visualmode() ==# 'V' ? 1 : 0)<CR>}
+	xnoremap <silent> <M-"> :call <SNR>29_opfunc(visualmode(),visualmode() ==# 'V' ? 1 : 0)<CR>"
+	xnoremap <silent> [ :call <SNR>29_opfunc(visualmode(),visualmode() ==# 'V' ? 1 : 0)<CR>]
+	xnoremap <silent> ' :call <SNR>29_opfunc(visualmode(),visualmode() ==# 'V' ? 1 : 0)<CR>'
+	xnoremap <silent> ( :call <SNR>29_opfunc(visualmode(),visualmode() ==# 'V' ? 1 : 0)<CR>)
+	xnoremap <silent> { :call <SNR>29_opfunc(visualmode(),visualmode() ==# 'V' ? 1 : 0)<CR>}
 "Delete Surrounding Pairs
 	nnoremap <C-x> %x``x
 	xnoremap <C-x> %x``x
@@ -52,6 +54,17 @@ nnoremap <C-e> :call CloseBufWithoutClosingNetrw()<CR>
 	vnoremap <C-v> "+p
 	nnoremap <C-v> "+p
 
+" Search for selected text, forwards or backwards.
+vnoremap <silent> * :<C-U>
+  \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
+  \gvy/<C-R><C-R>=substitute(
+  \escape(@", '/\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
+  \gV:call setreg('"', old_reg, old_regtype)<CR>
+vnoremap <silent> # :<C-U>
+  \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
+  \gvy?<C-R><C-R>=substitute(
+  \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
+  \gV:call setreg('"', old_reg, old_regtype)<CR>
 "*************** Vundle Configuration  ***************
 "
 	set nocompatible	"Changes other options as side effect filetype off                  " required
@@ -77,16 +90,13 @@ nnoremap <C-e> :call CloseBufWithoutClosingNetrw()<CR>
 	Plugin 'lervag/vimtex' 
 	Plugin 'vim-scripts/Conque-GDB'
 	Plugin 'vim-utils/vim-man'
-	Plugin 'w0rp/ale'
-	"Plugin 'moll/vim-node'
 	Plugin 'leafgarland/typescript-vim'
 	Plugin 'ternjs/tern_for_vim'
-	"Plugin 'davidhalter/jedi-vim'
-	"Plugin 'Shougo/deoplete.nvim'
-	"Plugin 'zchee/deoplete-jedi'
-	"Plugin 'roxma/nvim-yarp'
-	"Plugin 'roxma/vim-hug-neovim-rpc'
-	"Plugin 'ctrlpvim/ctrlp.vim'
+	Plugin 'pangloss/vim-javascript'
+	Plugin 'mxw/vim-jsx'
+	Plugin 'mattn/emmet-vim'
+	Plugin 'metakirby5/codi.vim'
+	Plugin 'w0rp/ale'
 	" All of your Plugins must be added before the following line
 	call vundle#end()            " required
 	filetype plugin indent on    " required
@@ -105,7 +115,7 @@ nnoremap <C-e> :call CloseBufWithoutClosingNetrw()<CR>
 	"colorscheme basic-dark
 	"colorscheme quantum 
 	"colorscheme jellybeans
-	"set relativenumber
+	set relativenumber
 	let g:neodark#background = '#232227'
 	colorscheme neodark
 	set t_Co=256
@@ -143,10 +153,11 @@ filetype plugin indent on	"Turns the filetype plugin on
 "autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif	"Closes the last remainig NERDTree split window
 "autocmd FileType html set omnifunc=htmlcomplete#CompleteTags	"Autocompletes HTML tags
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType html setlocal shiftwidth=2 tabstop=2 
+autocmd FileType typescript,html setlocal shiftwidth=2 tabstop=2 
 
 autocmd FileType cpp set keywordprg=cppman
 autocmd FileType c,cpp nmap <F4> :YcmCompleter FixIt<CR>
+autocmd FileType javascript,typescript nmap <F4> :ALEFix <CR>
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType javascript JsPreTmpl markdown
 autocmd FileType typescript JsPreTmpl markdown
@@ -161,8 +172,30 @@ autocmd FileType tex nmap <F5> :!latexmk -pdf -pdflatex=xelatex ./cv.pdf<CR>
 au BufRead,BufNewFile *.ts  setlocal filetype=typescript
 
 
-"*************** Let Commands ***************
+"*************** let commands ***************
+"
+"
+" ale configuration for linting
+	
+let g:ale_completion_enabled = 1
+let g:airline#extensions#ale#enabled = 1
+"let g:ale_fix_on_save = 1
+let g:ale_linters = {
+\   'javascript': ['eslint'],
+\	'typescript': ['tslint']
+\}
+let g:ale_fixers = {
+\   'typescript': ['tslint'],
+\}
+let g:ale_linters_explicit = 1
+let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.php,*.js"
+let g:user_emmet_settings = {
+  \  'javascript.jsx' : {
+    \      'extends' : 'jsx',
+    \  },
+  \}
 let g:pymode_python = 'python3'
+highlight ALEError ctermbg=Brown ctermfg=White
 
 "JEDI VIM CONFIGURATION 
 "Disables the function definitions
